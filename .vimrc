@@ -29,11 +29,14 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'rizzatti/dash.vim'
 Plugin 'megantiu/true.vim'
 Plugin 'fatih/vim-go'
+Plugin 'bluz71/vim-moonfly-colors'
+Plugin 'Yggdroot/indentLine'
+Plugin 'ap/vim-css-color'
 
 call vundle#end()
 
@@ -53,13 +56,10 @@ nnoremap <leader>t :tabe<CR>
 " FZF - fuzzy file search
 set rtp+=/usr/local/opt/fzf
 nnoremap <C-p> :FZF<CR>
-nnoremap <C-f> :Ag<CR> 
+nnoremap <M-f> :Ag<CR> 
+nnoremap <C-f> :Lines<CR>
 nnoremap <C-o> :Buffers<CR> 
-nnoremap <C-m> :History<CR>
-
-" MRU - most recently used - REPLACED FOR FZF HISTORY
-" let g:mru_file_list_size = 20
-" nnoremap <C-m> :Mru<CR>
+nnoremap <C-i> :History<CR>
 
 " <Ctrl-k> redraws the screen and removes any search highlighting.
 nnoremap <C-k> :nohl<CR><C-l>
@@ -79,10 +79,12 @@ nnoremap <leader>d :Dash<CR>
 
 " Remap arrows for autocomplete in command mode
 set wildmode=list:longest,full
-"
-" Javipolo
+
+" Themes
 set termguicolors
-colorscheme javipolo
+colorscheme moonfly
+" colorscheme javipolo
+
 
 " Go
 function! GO_FUNC()
@@ -91,8 +93,19 @@ function! GO_FUNC()
 endfunction
 nnoremap go :<C-u>call GO_FUNC()<CR>
 
-" Indenline
+" C
+nnoremap gc :!gcc % -o %< && ./%< <CR>
+
+" Indentline
 set list listchars=tab:\¦\ 
+match MyIndentLine /\t/
+2match MyIndentLineWithoutFirst /^\t/
+let g:indentLine_char = '¦'
+let g:indentLine_color_gui = '#df00df'
+
+" MyIndentLine
+" hi MyIndentLine guifg=#df00df 
+" hi MyIndentLineWithoutFirst guifg=#080808
 
 " Ycm
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -133,7 +146,9 @@ let g:airline_symbols.maxlinenr = ''
 set shiftwidth=4
 set textwidth=79
 set fileformat=unix
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
 " JS/HTML/CSS definition 
 autocmd BufNewFile,BufRead *.js setlocal tabstop=2 softtabstop=2 shiftwidth=2 fileformat=unix
